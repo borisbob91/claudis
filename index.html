@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claudis - Premier MCP IA open source made in Ivory Coast</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 15%, #8e44ad 35%, #9b59b6 50%, #e74c3c 70%, #c0392b 85%, #2c3e50 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animations de particules flottantes */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 60px; height: 60px; top: 60%; left: 80%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 40px; height: 40px; top: 80%; left: 20%; animation-delay: 4s; }
+        .particle:nth-child(4) { width: 100px; height: 100px; top: 10%; left: 70%; animation-delay: 1s; }
+        .particle:nth-child(5) { width: 50px; height: 50px; top: 40%; left: 60%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 0 10px;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 50%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            letter-spacing: -2px;
+        }
+
+        .tagline {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .africa-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .innovation-text {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .feature-card {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .feature-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 60px 0;
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+        }
+
+        .coming-soon {
+            background: linear-gradient(135deg, #e74c3c, #c0392b, #8e44ad);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .coming-soon:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .creator {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .credentials {
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Glow effects */
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6); }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="logo glow">CLAUDIS</h1>
+            <p class="tagline">Le premier serveur MCP qui transforme votre workspace en IA intelligente</p>
+            <span class="africa-badge">🇨🇮 MADE IN IVORY COAST</span>
+        </header>
+
+        <section class="hero">
+            <h2 class="hero-title">Votre Workspace devient Intelligent !</h2>
+            <p class="hero-subtitle">
+                Claudis est un serveur MCP (Model Context Protocol) révolutionnaire qui donne à Claude 
+                un accès direct et intelligent à tous vos projets, bases de données, PDFs et fichiers locaux. 
+                Plus de limitations, votre IA comprend TOUT votre environnement de travail !
+            </p>
+            <p class="innovation-text">
+                "Le premier MCP africain qui révolutionne l'interaction IA-workspace !"
+            </p>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <span class="feature-icon">🧠</span>
+                <h3 class="feature-title">IA Contextuelle Totale</h3>
+                <p class="feature-description">
+                    Claude accède directement à vos projets, PDFs, bases de données locales. 
+                    L'IA répond avec le contexte COMPLET de votre travail.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">🗂️</span>
+                <h3 class="feature-title">Exploration Intelligente</h3>
+                <p class="feature-description">
+                    Parcourt automatiquement vos dossiers, analyse vos patterns de code, 
+                    comprend votre architecture sans configuration manuelle.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">📊</span>
+                <h3 class="feature-title">Base de Données Locale</h3>
+                <p class="feature-description">
+                    Interrogez vos bases SQLite, CSV, Excel directement via l'IA. 
+                    Générez des rapports, analyses et visualisations instantanément.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">📄</span>
+                <h3 class="feature-title">Documents & PDFs</h3>
+                <p class="feature-description">
+                    L'IA lit et analyse vos PDFs, documents Word, présentations. 
+                    Créez du contenu basé sur vos ressources existantes.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h3 class="feature-title">Multi-Framework Expert</h3>
+                <p class="feature-description">
+                    Flutter, NestJS, Python, R, QGIS, React... Claudis maîtrise 
+                    vos outils et adapte ses réponses à votre stack technique.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">🎯</span>
+                <h3 class="feature-title">Génération Contextuelle</h3>
+                <p class="feature-description">
+                    Crée du code, rapports, tests qui respectent VOS conventions. 
+                    L'IA apprend de vos projets existants pour être cohérente.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">🔄</span>
+                <h3 class="feature-title">Workflow Automatisé</h3>
+                <p class="feature-description">
+                    "Analyse mes ventes Q4 et crée le rapport PowerPoint" → 
+                    Claudis fait tout : lit les données, analyse, génère le rapport !
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">🛡️</span>
+                <h3 class="feature-title">Sécurité Locale</h3>
+                <p class="feature-description">
+                    Vos données restent sur votre machine. Accès contrôlé, 
+                    chiffrement, permissions granulaires. Confidentialité totale.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">🌍</span>
+                <h3 class="feature-title">MCP Open Source</h3>
+                <p class="feature-description">
+                    Premier serveur MCP développé en Afrique. 100% open source, 
+                    extensible, et pensé pour la communauté mondiale.
+                </p>
+            </div>
+        </section>
+
+        <!-- Nouvelle section : Cas d'usage -->
+        <section class="use-cases" style="margin: 60px 0;">
+            <h2 style="text-align: center; color: white; font-size: 2.5rem; margin-bottom: 40px;">
+                🚀 Cas d'Usage
+            </h2>
+            
+                            <div class="use-case-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
+                <div class="feature-card" style="text-align: left; background: rgba(0, 0, 0, 0.4);">
+                    <h4 style="color: #e74c3c; margin-bottom: 15px;">👨‍💻 Développeurs</h4>
+                    <p style="color: rgba(255,255,255,0.95); margin-bottom: 10px;">
+                        <strong>"Ajoute un système d'auth à mon app Flutter"</strong>
+                    </p>
+                    <p class="feature-description">
+                        → Claudis analyse votre architecture, génère les screens, services, 
+                        et states en respectant vos patterns existants.
+                    </p>
+                </div>
+
+                <div class="feature-card" style="text-align: left; background: rgba(0, 0, 0, 0.4);">
+                    <h4 style="color: #9b59b6; margin-bottom: 15px;">📊 Analystes</h4>
+                    <p style="color: rgba(255,255,255,0.95); margin-bottom: 10px;">
+                        <strong>"Analyse mes ventes.csv et crée un dashboard"</strong>
+                    </p>
+                    <p class="feature-description">
+                        → Claudis lit vos données, identifie les tendances, 
+                        génère les rapports et crée les visualisations.
+                    </p>
+                </div>
+
+                <div class="feature-card" style="text-align: left; background: rgba(0, 0, 0, 0.4);">
+                    <h4 style="color: #3498db; margin-bottom: 15px;">🗺️ Géomaticiens</h4>
+                    <p style="color: rgba(255,255,255,0.95); margin-bottom: 10px;">
+                        <strong>"Crée une carte de densité avec mes données GPS"</strong>
+                    </p>
+                    <p class="feature-description">
+                        → Claudis accède à vos shapefiles, génère le script QGIS/Python 
+                        et produit la cartographie professionnelle.
+                    </p>
+                </div>
+
+                <div class="feature-card" style="text-align: left; background: rgba(0, 0, 0, 0.4);">
+                    <h4 style="color: #f39c12; margin-bottom: 15px;">👨‍🏫 Enseignants</h4>
+                    <p style="color: rgba(255,255,255,0.95); margin-bottom: 10px;">
+                        <strong>"Génère un QCM à partir de mon cours PDF"</strong>
+                    </p>
+                    <p class="feature-description">
+                        → Claudis lit votre support, extrait les concepts clés, 
+                        et crée des exercices adaptés au niveau souhaité.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nouvelle section : Avantages MCP -->
+        <section class="mcp-advantages" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 30px; margin: 40px 0; padding: 50px; border: 1px solid rgba(255, 255, 255, 0.2);">
+            <h2 style="text-align: center; color: white; font-size: 2.2rem; margin-bottom: 30px;">
+                ⚡ Pourquoi Claudis révolutionne votre workspace ?
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px;">
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🔄</div>
+                    <h4 style="color: white; margin-bottom: 10px;">Workflow Unifié</h4>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                        Une seule interface pour tous vos projets, langages et outils
+                    </p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">⚡</div>
+                    <h4 style="color: white; margin-bottom: 10px;">Productivité x10</h4>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                        Plus de copier-coller, plus de perte de contexte, tout est automatisé
+                    </p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🧠</div>
+                    <h4 style="color: white; margin-bottom: 10px;">IA Contextuelle</h4>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                        L'IA comprend VRAIMENT vos projets et votre façon de travailler
+                    </p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🔒</div>
+                    <h4 style="color: white; margin-bottom: 10px;">Contrôle Total</h4>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                        Vos données restent locales, sécurisées et sous votre contrôle
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2 class="cta-title">Prêt pour la Révolution MCP ?</h2>
+            <p class="cta-text">
+                Claudis transforme votre LLM en assistant workspace intelligent qui comprend TOUT votre environnement de travail
+            </p>
+            <div style="margin: 30px 0;">
+                <button class="coming-soon">🚀 Lancement Imminent</button>
+                <p style="color: rgba(255,255,255,0.8); margin-top: 15px; font-size: 0.9rem;">
+                    📧 Inscrivez-vous pour être notifié de la sortie officielle
+                </p>
+            </div>
+            
+            <div style="display: flex; justify-content: center; gap: 30px; margin-top: 30px; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 5px;">🔓</div>
+                    <p style="color: white; font-size: 0.9rem;">100% Open Source</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 5px;">🇨🇮</div>
+                    <p style="color: white; font-size: 0.9rem;">Made in Ivory Coast</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 5px;">⚡</div>
+                    <p style="color: white; font-size: 0.9rem;">MCP Protocol</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p class="creator">KOUACOU GHISLAIN BORSI</p>
+            <p class="credentials">INGÉNIEUR DES TECHNIQUES AGRICOLES • DÉVELOPPEUR FULL-STACK</p>
+            <p style="margin-top: 15px; font-size: 0.9rem; color: rgba(255,255,255,0.8);">
+                🌍 "L'Afrique qui CRÉE et n'utilise plus seulement !"
+            </p>
+            <p style="margin-top: 20px; font-size: 0.8rem;">
+                🇨🇮 Made in Ivory Coast with 💜 • Premier serveur MCP africain
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Animation d'apparition progressive
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.feature-card');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(50px)';
+                setTimeout(() => {
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+
+        // Effet de parallaxe léger sur les particules
+        document.addEventListener('mousemove', function(e) {
+            const particles = document.querySelectorAll('.particle');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            particles.forEach((particle, index) => {
+                const speed = (index + 1) * 0.5;
+                particle.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
